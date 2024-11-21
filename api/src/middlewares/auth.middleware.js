@@ -7,6 +7,7 @@ export const verifyToken = (req,res,next) => {
 
     if(!token) return next(errorHandler(401,'Unauthorised token'));
 
+    // using jwt to decode and verify the incoming token
     jwt.verify(token,process.env.ACCESS_TOKEN_SECRET, (err,user) => {
         if(err) return next(errorHandler(403,'Forbidden'));
 
