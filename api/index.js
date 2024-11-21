@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 
 // different routings
 import authRouter from "./src/routes/auth.routes.js";
+import postRouter from "./src/routes/post.routes.js";
 
 dotenv.config({
   path: "./env",
@@ -43,6 +44,7 @@ app.use((err, req, res, next) => {
 
 // choosing the routes to send the request
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/posts",postRouter);
 
 // connecting to the database
 connectDb()
