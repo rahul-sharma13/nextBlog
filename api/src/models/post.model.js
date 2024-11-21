@@ -15,7 +15,12 @@ const postSchema = new Schema(
       ref: "User",
     },
   },
-  { timestamps: true }
+  {
+    timestamps: {
+      createdAt: true,
+      updatedAt: false,
+    },
+  }
 );
 
 const Post = mongoose.model("Post", postSchema);
