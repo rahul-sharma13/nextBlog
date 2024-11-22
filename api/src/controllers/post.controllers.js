@@ -27,49 +27,51 @@ export const createPost = async (req, res, next) => {
 // getting user posts based on the time filter
 export const getAllPosts = async (req, res, next) => {
   // taking time from the url query
-  const inTime = req.query.inTime || "all";
-  let allPosts;
+  //   const inTime = req.query.inTime || "all";
+  //   let allPosts;
 
+  //   try {
+  //     if (inTime === "all") {
+  //       allPosts = await Post.find();
+  //     } else if (inTime === "month") {
+  //       const now = new Date();
+
+  //       const oneMonthAgo = new Date(
+  //         now.getFullYear(),
+  //         now.getMonth() - 1,
+  //         now.getDate()
+  //       );
+
+  //       allPosts = await Post.find({
+  //         createdAt: { $gte: oneMonthAgo },
+  //       }).populate({path : "authorId"});
+  //     } else if (inTime === "week") {
+  //       const now = new Date();
+
+  //       const oneWeekAgo = new Date(
+  //         now.getFullYear(),
+  //         now.getMonth(),
+  //         now.getDate() - 7
+  //       );
+
+  //       allPosts = await Post.find({
+  //         createdAt: { $gte: oneWeekAgo },
+  //       });
+  //     } else if (inTime === "day") {
+  //       const now = new Date();
+
+  //       const oneDayAgo = new Date(
+  //         now.getFullYear(),
+  //         now.getMonth(),
+  //         now.getDate() - 1
+  //       );
+
+  //       allPosts = await Post.find({
+  //         createdAt: { $gte: oneDayAgo },
+  //       });
+  //     }
   try {
-    if (inTime === "all") {
-      allPosts = await Post.find();
-    } else if (inTime === "month") {
-      const now = new Date();
-
-      const oneMonthAgo = new Date(
-        now.getFullYear(),
-        now.getMonth() - 1,
-        now.getDate()
-      );
-
-      allPosts = await Post.find({
-        createdAt: { $gte: oneMonthAgo },
-      });
-    } else if (inTime === "week") {
-      const now = new Date();
-
-      const oneWeekAgo = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate() - 7
-      );
-
-      allPosts = await Post.find({
-        createdAt: { $gte: oneWeekAgo },
-      });
-    } else if (inTime === "day") {
-      const now = new Date();
-
-      const oneDayAgo = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate() - 1
-      );
-
-      allPosts = await Post.find({
-        createdAt: { $gte: oneDayAgo },
-      });
-    }
+    const allPosts = await Post.find().populate({ path: "authorId", select : "-_id -password" });
 
     res.status(200).json(new ApiResponse(200, allPosts, "All posts fetched!"));
   } catch (error) {
