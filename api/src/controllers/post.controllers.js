@@ -103,3 +103,15 @@ export const getUserPosts = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getPostById = async (req, res, next) => {
+  const postId = req.params.id;
+
+  try {
+    const post = await Post.findById(postId);
+
+    res.json(new ApiResponse(200, post, "Post retrieved"));
+  } catch (error) {
+    next(error);
+  }
+};

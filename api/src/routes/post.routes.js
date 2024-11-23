@@ -3,6 +3,7 @@ import { verifyToken } from "../middlewares/auth.middleware.js";
 import {
   createPost,
   getAllPosts,
+  getPostById,
   getUserPosts,
 } from "../controllers/post.controllers.js";
 
@@ -14,5 +15,7 @@ router.route("/post").post(verifyToken, createPost);
 router.route("/get").get(getAllPosts);
 // to get posts based on the userId
 router.route("/post").get(verifyToken, getUserPosts);
+// get post by id
+router.route("/postbyid/:id").get(getPostById);
 
 export default router;
