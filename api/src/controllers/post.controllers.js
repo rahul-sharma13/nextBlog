@@ -71,7 +71,10 @@ export const getAllPosts = async (req, res, next) => {
   //       });
   //     }
   try {
-    const allPosts = await Post.find().populate({ path: "authorId", select : "-_id -password" });
+    const allPosts = await Post.find().populate({
+      path: "authorId",
+      select: "-_id -password",
+    });
 
     res.status(200).json(new ApiResponse(200, allPosts, "All posts fetched!"));
   } catch (error) {
@@ -80,10 +83,18 @@ export const getAllPosts = async (req, res, next) => {
 };
 
 export const getUserPosts = async (req, res, next) => {
-  const userId = req.user._id;
+  const userId = req.user?._id;
+  const getSpecificUser = req.query.authorId;
 
   try {
-    const postsOfTheUser = await Post.find({ authorId: userId });
+    const userToFetch = getSpecificUser || userId;
+
+    if (!userToFetch) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, null, "User ID is required"));
+    }
+    const postsOfTheUser = await Post.find({ authorId: userToFetch });
 
     res
       .status(200)
