@@ -27,7 +27,7 @@ export const userSignUp = async (req, res, next) => {
   console.log(req.body);
 
   if (!email || !password) {
-    return next(errorHandler(409, "All fields are required."));
+    return next(errorHandler(400, "All fields are required."));
   }
 
   // hashing the password
