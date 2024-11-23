@@ -44,7 +44,7 @@ app.use((err, req, res, next) => {
 
 // choosing the routes to send the request
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/posts",postRouter);
+app.use("/api/v1/posts", postRouter);
 
 // connecting to the database
 connectDb()

@@ -97,12 +97,25 @@ export const userLogin = async (req, res, next) => {
       secure: true,
       httpOnly: true,
       sameSite: "none",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     };
 
     return res
       .cookie("access_token", accessToken, options)
       .status(200)
       .json(new ApiResponse(200, requiredUser, "User signed in successfully."));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getUserInfo = async (req, res, next) => {
+  try {
+    const userToSend = req.user;
+
+    const { iat, exp, ...rest } = userToSend;
+
+    res.json(new ApiResponse(200, rest, "user is authorised for this route."));
   } catch (error) {
     next(error);
   }
