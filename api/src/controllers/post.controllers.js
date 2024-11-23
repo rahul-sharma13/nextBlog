@@ -80,7 +80,7 @@ export const getAllPosts = async (req, res, next) => {
 };
 
 export const getUserPosts = async (req, res, next) => {
-  const userId = req.params.authorId;
+  const userId = req.user._id;
 
   try {
     const postsOfTheUser = await Post.find({ authorId: userId });

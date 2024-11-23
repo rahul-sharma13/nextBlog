@@ -1,6 +1,10 @@
 import express from "express";
 import { verifyToken } from "../middlewares/auth.middleware.js";
-import { createPost, getAllPosts, getUserPosts } from "../controllers/post.controllers.js";
+import {
+  createPost,
+  getAllPosts,
+  getUserPosts,
+} from "../controllers/post.controllers.js";
 
 const router = express.Router();
 
@@ -9,6 +13,6 @@ router.route("/post").post(verifyToken, createPost);
 // to get all the posts
 router.route("/get").get(getAllPosts);
 // to get posts based on the userId
-router.route("/post").get(getUserPosts);
+router.route("/post").get(verifyToken, getUserPosts);
 
 export default router;
